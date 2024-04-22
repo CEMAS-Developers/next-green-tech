@@ -23,5 +23,5 @@ model user {
 model zafacon {
   id        Int      @id @default(autoincrement())
   estado    Int
-  fecha     Date
+  fecha     Timetamp
 }
