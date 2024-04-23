@@ -12,11 +12,11 @@ Este proyecto es un dashboard desarrollado utilizando Next.js y PostgreSQL como 
 ## Instalación
 - Clona este repositorio:
 ```bash
-git clone <URL del repositorio>
+git clone https://github.com/CEMAS-Developers/next-green-tech.git
 ```
 - Instala las dependencias del servidor y del cliente:
 ```bash
-cd https://github.com/CEMAS-Developers/next-green-tech.git
+cd next-green-tech
 ```
 
 ```bash
@@ -27,7 +27,7 @@ npm install
 - Ejecuta las migraciones de la base de datos para crear las tablas necesarias:
 
 ```bash
-npm run migrate
+npm run seed
 ```
 - Inicia la aplicación:
 ```bash
