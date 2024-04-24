@@ -14,13 +14,14 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model user {
-  id        Int      @id @default(autoincrement())       
-  email     String       
-  password  String 
+model User {
+   id        Int      @id @default(autoincrement())       
+   email     String       
+   password  String 
 }
 
 model zafacon {
   id        Int      @id @default(autoincrement())
   estado    Int
+  fecha     Timetamp
 }

@@ -9,23 +9,16 @@ export default function InvoiceStatus({ status }: { status: string }) {
         {
           'bg-red-500 text-white': status === 'pending',
           'bg-green-500 text-white': status === 'paid',
-          'bg-yellow-500 text-white': status === 'medium'
         },
       )}
     >
-      {status === 'pending' ? (
+      {status === 'full' ? (
         <>
           Recolección Pendiente
           <ClockIcon className="ml-1 w-4 text-white" />
         </>
       ) : null}
-      {status === 'medium' ? (
-        <>
-          Al 50%
-          <ClockIcon className="ml-1 w-4 text-white" />
-        </>
-      ) : null}
-      {status === 'paid' ? (
+      {status === 'empty' ? (
         <>
           Vacio
           <CheckIcon className="ml-1 w-4 text-white" />
