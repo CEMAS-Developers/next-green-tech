@@ -6,30 +6,28 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
-
+import { fetchCardData } from '@/app/lib/data';
 const iconMap = {
   collected: TrashIcon,
   customers: UserGroupIcon,
   pending: ClockIcon,
   invoices: InboxIcon,
 };
-import { fetchCardData } from '@/app/lib/data';
-export default async function CardWrapper() {
-  const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
-  return (
 
-    
+
+
+export default async function CardWrapper() {
+  const { numberzafaconTable,
+          totalfullzafaconTable,
+          totalemptyzafaconTable,
+        } = await fetchCardData()
+     return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      <Card title="Recolectado" value={totalPaidInvoices} type="collected" />
-      <Card title="Pendiente" value={totalPendingInvoices} type="pending" />
-      <Card title="Total de zafacones" value={numberOfInvoices} type="invoices" />
+      <Card title="Recolectado" value={numberzafaconTable} type="collected" />
+      <Card title="Pendiente" value={totalfullzafaconTable} type="pending" />
+      <Card title="Total de zafacones" value={totalemptyzafaconTable} type="invoices" />
     </div>
   
   );
