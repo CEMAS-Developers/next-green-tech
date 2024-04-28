@@ -19,12 +19,7 @@ export type zafacon = {
 
 export type zafaconTable = {
   id: string;
-  customer_id: string;
-  name: string;
-  email: string;
-  image_url: string;
   date: string;
-  amount: number;
   status: 'full' | 'empty';
 };
 

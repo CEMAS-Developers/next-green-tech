@@ -33,6 +33,15 @@ const users = [
   },
 ];
 
+const zafacon =[
+  {
+    id: '4105442',
+    status: 'empty',
+    date: 'May, 03, 24'
+  }
+]
+
 module.exports = {
-  users
+  users,
+  zafacon
 };

@@ -1,6 +1,5 @@
-import LatestInvoices from '../ui/dashboard/latest-invoices';
-import CardWrapper from '@/app/ui/dashboard/cards';
-import { CardsSkeleton } from '@/app/ui/skeletons';
+// import CardWrapper from '@/app/ui/dashboard/cards';
+// import { CardsSkeleton } from '@/app/ui/skeletons';
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/invoices/table';
@@ -24,11 +23,11 @@ export default async function Page({
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
         Dashboard
       </h1>
-      <Suspense fallback={<CardsSkeleton />}>
-        <div className='max-w-screen w-screen'>
+      {/* <Suspense fallback={<CardsSkeleton />}>
+        <div className='max-w-screen w-screen flex'>
           <CardWrapper />
         </div>
-      </Suspense>
+      </Suspense> */}
       <div className="mt-6">
         {/* <LatestInvoices /> */}
         <div className="w-full">

@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import {  Users, zafaconTable} from './definitions';
-import { formatCurrency } from './utils';
+// import { formatCurrency } from './utils';
 
 // export async function fetchRevenue() {
 //   noStore();
@@ -47,7 +47,6 @@ import { formatCurrency } from './utils';
 // }
 
 export async function fetchCardData() {
-  noStore();
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
@@ -63,15 +62,15 @@ export async function fetchCardData() {
       zafaconstatusPromise,
     ]);
   
-    const numberzafaconTable = Number(data[0].rows[0].count ?? '0'); // Corregido el acceso a los resultados
+    const numberZafaconTable = Number(data[0].rows[0].count ?? '0'); // Corregido el acceso a los resultados
     const { full, empty } = data[1].rows[0]; // Corregido el acceso a los resultados
-    const totalfullzafaconTable = Number(full ?? '0'); // Corregido el acceso a los resultados
-    const totalemptyzafaconTable = Number(empty ?? '0'); // Corregido el acceso a los resultados
+    const totalFullZafaconTable = Number(full ?? '0'); // Corregido el acceso a los resultados
+    const totalEmptyZafaconTable = Number(empty ?? '0'); // Corregido el acceso a los resultados
 
     return {
-      numberzafaconTable,
-      totalfullzafaconTable,
-      totalemptyzafaconTable,
+      numberZafaconTable,
+      totalFullZafaconTable,
+      totalEmptyZafaconTable,
     };
   } catch (error) {
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM zafacon`;
@@ -90,27 +89,18 @@ export async function fetchFilteredzafaconTable(
   query: string,
   currentPage: number,
 ) {
-  noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
     const zafaconTable = await sql<zafaconTable>`
-      SELECT
-        zafacon.id,
-        zafacon.status,
-        zafacon.date,
-      FROM zafacon
-      WHERE
-        zafaconTable.date::text ILIKE ${`%${query}%`} OR
-        zafaconTable.status ILIKE ${`%${query}%`}
-      ORDER BY zafacon.date DESC
+      SELECT * FROM zafacon ORDER BY zafacon.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
     return zafaconTable.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch zafaconTable.');
+    throw new Error('Failed to fetch zafacon.');
   }
 }
 
@@ -133,83 +123,83 @@ export async function fetchzafaconPages(query: string) {
 }
 
 
-export async function fetchInvoiceById(id: string) {
-  noStore();
-  try {
-    const data = await sql<InvoiceForm>`
-      SELECT
-        zafaconTable.id,
-        zafaconTable.customer_id,
-        zafaconTable.amount,
-        zafaconTable.status
-      FROM zafaconTable
-      WHERE zafaconTable.id = ${id};
-    `;
+// export async function fetchInvoiceById(id: string) {
+//   noStore();
+//   try {
+//     const data = await sql<InvoiceForm>`
+//       SELECT
+//         zafaconTable.id,
+//         zafaconTable.customer_id,
+//         zafaconTable.amount,
+//         zafaconTable.status
+//       FROM zafaconTable
+//       WHERE zafaconTable.id = ${id};
+//     `;
 
-    const invoice = data.rows.map((invoice) => ({
-      ...invoice,
-      amount: invoice.amount / 100,
-    }));
+//     const invoice = data.rows.map((invoice) => ({
+//       ...invoice,
+//       amount: invoice.amount / 100,
+//     }));
 
-    return invoice[0];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoice.');
-  }
-}
+//     return invoice[0];
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch invoice.');
+//   }
+// }
 
-export async function fetchCustomers() {
-  noStore();
-  try {
-    const data = await sql<CustomerField>`
-      SELECT
-        id,
-        name
-      FROM customers
-      ORDER BY name ASC
-    `;
+// export async function fetchCustomers() {
+//   noStore();
+//   try {
+//     const data = await sql<CustomerField>`
+//       SELECT
+//         id,
+//         name
+//       FROM customers
+//       ORDER BY name ASC
+//     `;
 
-    const customers = data.rows;
-    return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
-  }
-}
+//     const customers = data.rows;
+//     return customers;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch all customers.');
+//   }
+// }
 
-export async function fetchFilteredCustomers(query: string) {
-  noStore();
-  try {
-    const data = await sql<CustomersTableType>`
-		SELECT
-		  customers.id,
-		  customers.name,
-		  customers.email,
-		  customers.image_url,
-		  COUNT(zafaconTable.id) AS total_zafaconTable,
-		  SUM(CASE WHEN zafaconTable.status = 'empty' THEN zafaconTable.amount ELSE 0 END) AS total_empty,
-		  SUM(CASE WHEN zafaconTable.status = 'paid' THEN zafaconTable.amount ELSE 0 END) AS total_paid
-		FROM customers
-		LEFT JOIN zafaconTable ON customers.id = zafaconTable.customer_id
-		WHERE
-		  customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`}
-		GROUP BY customers.id, customers.name, customers.email, customers.image_url
-		ORDER BY customers.name ASC
-	  `;
+// export async function fetchFilteredCustomers(query: string) {
+//   noStore();
+//   try {
+//     const data = await sql<CustomersTableType>`
+// 		SELECT
+// 		  customers.id,
+// 		  customers.name,
+// 		  customers.email,
+// 		  customers.image_url,
+// 		  COUNT(zafaconTable.id) AS total_zafaconTable,
+// 		  SUM(CASE WHEN zafaconTable.status = 'empty' THEN zafaconTable.amount ELSE 0 END) AS total_empty,
+// 		  SUM(CASE WHEN zafaconTable.status = 'paid' THEN zafaconTable.amount ELSE 0 END) AS total_paid
+// 		FROM customers
+// 		LEFT JOIN zafaconTable ON customers.id = zafaconTable.customer_id
+// 		WHERE
+// 		  customers.name ILIKE ${`%${query}%`} OR
+//         customers.email ILIKE ${`%${query}%`}
+// 		GROUP BY customers.id, customers.name, customers.email, customers.image_url
+// 		ORDER BY customers.name ASC
+// 	  `;
 
-    const customers = data.rows.map((customer) => ({
-      ...customer,
-      total_empty: formatCurrency(customer.total_empty),
-      total_paid: formatCurrency(customer.total_paid),
-    }));
+//     const customers = data.rows.map((customer) => ({
+//       ...customer,
+//       total_empty: formatCurrency(customer.total_empty),
+//       total_paid: formatCurrency(customer.total_paid),
+//     }));
 
-    return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch customer table.');
-  }
-}
+//     return customers;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch customer table.');
+//   }
+// }
 
 export async function getUser(email: string) {
   noStore();
