@@ -1,14 +1,14 @@
 import { CheckIcon, ClockIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-export default function InvoiceStatus({ status }: { status: string }) {
+export default function ZafaconStatus({ status }: { status: string }) {
   return (
     <span
       className={clsx(
         'inline-flex items-center rounded-full px-2 py-1 text-sm',
         {
-          'bg-red-500 text-white': status === 'pending',
-          'bg-green-500 text-white': status === 'paid',
+          'bg-red-500 text-white': status === 'full',
+          'bg-green-500 text-white': status === 'empty',
         },
       )}
     >
