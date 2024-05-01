@@ -19,19 +19,31 @@ export async function POST(req: NextRequest, res: NextResponse) {
     try {
       // Leer el cuerpo de la solicitud como JSON
       const data = await req.json();
-      const { id, status, date } = data;
-
+      const { ID, status, date } = data;
+      console.log(data);
       // Verificar si el ID existe en la base de datos
-      const result = await pool.query('SELECT * FROM zafacon WHERE id = $1', [id]);
+      const result = await pool.query('SELECT * FROM zafacon WHERE id = $1', [ID]);
 
       if (result.rows.length > 0) {
         // Si el ID existe, actualizar las columnas correspondientes
-        await pool.query('UPDATE zafacon SET status = $1, date = $2 WHERE id = $3', [status, date, id]);
-        return NextResponse.json({ message: 'Datos actualizados correctamente.' });
+        if (date.trim() === '') {
+          const currentDate = new Date().toISOString().split('T')[0];
+          await pool.query('UPDATE zafacon SET status = $1, date = $2 WHERE id = $3', [status, currentDate, ID]);
+          return NextResponse.json({ message: 'Datos actualizados correctamente.' });
+        } else {
+          await pool.query('UPDATE zafacon SET status = $1, date = $2 WHERE id = $3', [status, date, ID]);
+          return NextResponse.json({ message: 'Datos actualizados correctamente.' });
+        }
       } else {
         // Si el ID no existe, crear un nuevo registro
-        await pool.query('INSERT INTO zafacon (id, status, date) VALUES ($1, $2, $3)', [id, status, date]);
-        return NextResponse.json({ message: 'Nuevo registro creado.' });
+        if (date.trim() === '') {
+          const currentDate = new Date().toISOString().split('T')[0];
+          await pool.query('INSERT INTO zafacon (id, status, date) VALUES ($1, $2, $3)', [ID, status, currentDate]);
+          return NextResponse.json({ message: 'Nuevo registro creado.' });
+        } else {
+          await pool.query('INSERT INTO zafacon (id, status, date) VALUES ($1, $2, $3)', [ID, status, date]);
+          return NextResponse.json({ message: 'Nuevo registro creado.' });
+        }
       }
     } catch (error) {
       // Si hay un error al interactuar con la base de datos, devolver un error 500
