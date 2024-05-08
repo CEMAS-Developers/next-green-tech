@@ -5,40 +5,81 @@ import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col" style={{ backgroundImage: "url('/fondoLangding.jpg')", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed' }}>
-      <div className="flex justify-center items-center h-screen flex-col bg-[#0000009d] md:h-screen filter">
-         <Greentech/>
-         <Link
-            href="/login"
-            className="flex items-center gap-5 self-center rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
-      </div>
-      <div className="flex justify-center bg-gray-100">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-full md:px-20">
-          <div
-            className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"
-          />
-          <p className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}>
-            <strong>Welcome to Acme.</strong> This is the example for the{' '}
-            <a href="https://nextjs.org/learn/" className="text-blue-500">
-              Next.js Learn Course
-            </a>
-            , brought to you by Vercel.
-          </p>
-          <Link
-            href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
-        </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
+    <div>
+    <header className="bg-blue-500 py-4">
+    <div className="container mx-auto flex justify-between items-center">
+      <h1 className="text-white text-3xl font-bold">Green Tech Dashboard</h1>
+      <nav>
+        <ul className="flex space-x-6">
+          <li>
+            <a href="#" className="text-white hover:text-gray-200">Inicio</a>
+          </li>
+          <li>
+            <a href="#features" className="text-white hover:text-gray-200">Características</a>
+          </li>
+          <li>
+            <a href="#about" className="text-white hover:text-gray-200">Sobre Nosotros</a>
+          </li>
+          <li>
+            <a href="/login" className="text-white hover:text-gray-200">Login</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
+  <main>
+    {/* Sección de Presentación */}
+    <section className="bg-green-500 py-20">
+      <div className="container mx-auto text-center">
+        <h2 className="text-white text-4xl font-bold mb-4">Bienvenido al Futuro</h2>
+        <p className="text-white text-lg mb-8">Nuestro zafacón inteligente revolucionará la forma en que gestionas tus residuos.</p>
+        <button className="bg-white text-blue-500 px-8 py-3 rounded-full font-bold hover:bg-blue-400 hover:text-white transition duration-300">Descubre Más</button>
+      </div>
+    </section>
+
+    {/* Sección de Características */}
+    <section id="features" className="py-20">
+      <div className="container mx-auto text-center">
+        <h2 className="text-3xl font-bold mb-12">Características Principales</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h3 className="text-xl font-bold mb-4">Clasificación Automática</h3>
+            <p className="text-gray-700">Nuestro zafacón puede clasificar automáticamente tus residuos para un reciclaje eficiente.</p>
+          </div>
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h3 className="text-xl font-bold mb-4">Notificaciones en Tiempo Real</h3>
+            <p className="text-gray-700">Recibe notificaciones en tu teléfono cuando el zafacón esté lleno o necesite mantenimiento.</p>
+          </div>
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h3 className="text-xl font-bold mb-4">Diseño Elegante</h3>
+            <p className="text-gray-700">El diseño moderno y elegante del zafacón se adapta perfectamente a cualquier entorno.</p>
+          </div>
         </div>
       </div>
-    </main>
-  );
+    </section>
+
+    {/* Sección "Sobre Nosotros" */}
+    <section id="about" className="bg-blue-500 py-20">
+      <div className="container mx-auto text-center">
+        <h2 className="text-white text-3xl font-bold mb-8">Sobre Nosotros</h2>
+        <p className="text-white text-lg mb-8">En Green Tech, nos apasiona crear soluciones innovadoras y sostenibles para mejorar la sostenibilidad de un ambiente empresarial y a la vez colaborar con el cuidado del medio ambiente.</p>
+        <button className="bg-white text-blue-500 px-8 py-3 rounded-full font-bold hover:bg-blue-400 hover:text-white transition duration-300">Más sobre nosotros</button>
+      </div>
+    </section>
+
+    {/* Sección de Contacto */}
+    <section id="contact" className="py-20">
+      <div className="container mx-auto text-center">
+        <h2 className="text-3xl font-bold mb-8">Inicia Sesión</h2>
+        <p className="text-gray-700 text-lg mb-8">¿Tu empresa ya está registrada? ¡Inicia Sesión!</p>
+        <button className="bg-blue-500 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-400 transition duration-300"><a href="/login">Inicia Sesión</a></button>
+      </div>
+    </section>
+  </main>
+
+  <footer className="bg-gray-900 text-white py-8 text-center">
+    <p>&copy; 2024 GreenTech. Todos los derechos reservados.</p>
+  </footer>
+</div>  );
 }

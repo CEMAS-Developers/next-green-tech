@@ -19,10 +19,8 @@ export default async function Page({
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchzafaconPages(query);
   return (
+   
     <main className='overflow-hidden'>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Dashboard
-      </h1>
       {/* <Suspense fallback={<CardsSkeleton />}>
         <div className='max-w-screen w-screen flex'>
           <CardWrapper />
@@ -33,9 +31,6 @@ export default async function Page({
         <div className="w-full">
           <div className="flex w-full items-center justify-between">
             <h1 className={`${lusitana.className} text-2xl`}>Zafacones</h1>
-          </div>
-          <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-            <Search placeholder="Buscar Zafacón..." />
           </div>
           <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
             <Table query={query} currentPage={currentPage} />

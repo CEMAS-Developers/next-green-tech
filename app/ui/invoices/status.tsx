@@ -20,7 +20,7 @@ export default function ZafaconStatus({ status }: { status: string }) {
       ) : null}
       {status === 'empty' ? (
         <>
-          Vacio
+          Vacío
           <CheckIcon className="ml-1 w-4 text-white" />
         </>
       ) : null}

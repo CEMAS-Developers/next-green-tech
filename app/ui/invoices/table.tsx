@@ -1,9 +1,8 @@
-
 import ZafaconStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal} from '@/app/lib/utils';
+import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredzafaconTable } from '@/app/lib/data';
 
-export default async function zafaconesTable({
+export default async function ZafaconesTable({
   query,
   currentPage,
 }: {
@@ -11,64 +10,53 @@ export default async function zafaconesTable({
   currentPage: number;
 }) {
   const zafacones = await fetchFilteredzafaconTable(query, currentPage);
-
   return (
-    <div className="mt-6 flow-root">
-      <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          <div className="md:hidden">
-            {zafacones?.map((zafacones) => (
-              <div
-                key={zafacones.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                  </div>
-                  <ZafaconStatus status={zafacones.status} />
-                </div>
+    <div className="mt-6">
+      <div className="overflow-hidden bg-white rounded-lg shadow-md">
+        <div className="md:hidden">
+          {zafacones?.map((zafacon) => (
+            <div key={zafacon.id} className="p-4 border-b">
+              <div className="flex items-center justify-between">
+                <p className="text-lg font-medium">{zafacon.id}</p>
+                <ZafaconStatus status={zafacon.status} />
               </div>
-            ))}
-          </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
-            <thead className="rounded-lg text-left text-sm font-normal">
-              <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Zafacón
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Ultima recolecta
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Estatdo
-                </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {zafacones?.map((zafacones) => (
-                <tr
-                  key={zafacones.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <p>{zafacones.id}</p>
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(zafacones.date)}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <ZafaconStatus status={zafacones.status} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              <p className="text-sm text-gray-500">
+                Última recolecta: {formatDateToLocal(zafacon.date)}
+              </p>
+            </div>
+          ))}
         </div>
+        <table className="w-full table-fixed min-w-full divide-y divide-gray-200 md:table sm:hidden xs:hidden">
+          <thead>
+            <tr>
+              <th className="w-1/4 px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                Zafacón
+              </th>
+              <th className="w-1/4 px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                Última recolecta
+              </th>
+              <th className="w-1/4 px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                Estado
+              </th>
+              <th className="px-6 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {zafacones?.map((zafacon) => (
+              <tr key={zafacon.id} className="bg-white divide-y divide-gray-200">
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <p className="text-sm font-medium text-gray-900">{zafacon.id}</p>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <p className="text-sm text-gray-500">{formatDateToLocal(zafacon.date)}</p>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <ZafaconStatus status={zafacon.status} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
